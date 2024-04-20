@@ -16,4 +16,5 @@ uyumsuzSifre = "123qw"
 unregisteredMail = "qweas@gmail.com"
 popupCss = ".toast-body"
 sifreSifirlamaBasariliText = "• Şifre sıfırlama işlemi başarılı."
+alertXpath = "//*[@class='toast-body']"
 

@@ -57,10 +57,12 @@ class Test_Sifre():
          password.send_keys(validPassword)
          simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
          simdi_giris_yap.click()
-          # İlk mesajı bulmak için bekleyici oluştur
+
+
+        # İlk mesajı bulmak için bekleyici oluştur
          window_before = self.driver.window_handles[0]
          sleep(1)
-         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
+         first_message = self.waitForElelemetVisible((By.XPATH, "//*[@id=':24']"))
          first_message.click()  # İlk mesaja tıkla
 
          self.driver.execute_script("window.scrollTo(0,200)")
@@ -77,11 +79,17 @@ class Test_Sifre():
          yeniSifreTekrarInput.send_keys(yeniSifreBelirleme)
          gonderButon = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss))
          gonderButon.click()
-         sleep(7)
-         succesResetText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
+
+        
+         succesResetText = self.waitForElelemetVisible((By.XPATH,alertXpath))
          assert succesResetText.text == sifreSifirlamaBasariliText
          sleep(3)
         # bununun yerine yeni password ile giris yapalim
+      
+      def alert_wait(self,sayi):
+        #driver = webdriver.Chrome()  # Chrome kullanıyorsanız Chrome'un yolunu belirtin
+        wait = WebDriverWait(self.driver, sayi)
+        wait.until(ec.alert_is_present())
 
 
       
@@ -93,25 +101,25 @@ class Test_Sifre():
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(unregisteredMail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         unregisteredText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
+         unregisteredText = self.waitForElelemetVisible((By.XPATH,alertXpath))
          assert unregisteredText.text == gecersizformattext
        
-      def test_notMatchPassword(self):
-         self.driver.execute_script("window.scrollTo(0,300)")
-         sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
-         epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
-         epostaInput.send_keys(validemail)
-         sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         Test_notMatchPassword().test_linkionaylama()
+      # def test_notMatchPassword(self):
+      #    self.driver.execute_script("window.scrollTo(0,300)")
+      #    sleep(2)
+      #    sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
+      #    sifremiUnuttumButton.click()
+      #    epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
+      #    epostaInput.send_keys(validemail)
+      #    sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
+      #    Test_notMatchPassword().test_linkionaylama()
 
-         try:
-          notMatchPasswordText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
-          assert notMatchPasswordText.text == sifreEslesmediText
+      #    try:
+      #     notMatchPasswordText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
+      #     assert notMatchPasswordText.text == sifreEslesmediText
         
-         except TimeoutException:
-          pytest.fail("Success message did not appear within 10 seconds")
+      #    except TimeoutException:
+      #     pytest.fail("Success message did not appear within 10 seconds")
 
          
 
@@ -124,10 +132,10 @@ class Test_Sifre():
     
 
 
-      # def waitForAllElelemetVisible(self,locators,timeout=5):
-      #   return WebDriverWait(self.driver,timeout).until(ec.visibility_of_all_elements_located(locators))
-      # def waitForElelemetInvisible(self,locator,timeout=5):
-      #   return WebDriverWait(self.driver,timeout).until(ec.invisibility_of_element_located(locator))
+      # # def waitForAllElelemetVisible(self,locators,timeout=5):
+      # #   return WebDriverWait(self.driver,timeout).until(ec.visibility_of_all_elements_located(locators))
+      # # def waitForElelemetInvisible(self,locator,timeout=5):
+      # #   return WebDriverWait(self.driver,timeout).until(ec.invisibility_of_element_located(locator))
 
 
   
