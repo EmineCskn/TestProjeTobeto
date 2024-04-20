@@ -43,13 +43,44 @@ class Test_Sifre():
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         Test_mailDogrulama().test_linkionaylama()
-         sleep(10)
+         self.driver=webdriver.Chrome()
+         self.driver.maximize_window()
+         self.driver.get("https://mail.google.com/mail/u/0/#inbox")
+         email_giris=self.waitForElelemetVisible((By.ID, "identifierId"))
+         sleep(3)
+         email_giris.send_keys(validemail)
+         email_giris.click()
+         sonraki= self.waitForElelemetVisible((By.XPATH, "//div[@id='identifierNext']/div/button/span"))
+         sonraki.click()
 
-         
-      
-        #  succesResetText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
-        #  assert succesResetText.text == sifreSifirlamaBasariliText
+         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
+         password.send_keys(validPassword)
+         simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
+         simdi_giris_yap.click()
+          # İlk mesajı bulmak için bekleyici oluştur
+         window_before = self.driver.window_handles[0]
+         sleep(1)
+         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
+         first_message.click()  # İlk mesaja tıkla
+
+         self.driver.execute_script("window.scrollTo(0,200)")
+         sleep(2)
+         first_messageLink = self.waitForElelemetVisible((By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[2]/div/div[3]/div/div/div/div/div/div[1]/div[2]/div[3]/div[3]/div/div[1]/div/div/div/p/span/a"))
+         first_messageLink.click()
+         sleep(5)
+
+         window_after = self.driver.window_handles[1]
+         self.driver.switch_to.window(window_after)
+         yeniSifreInput = self.waitForElelemetVisible((By.XPATH,yeniSifreXpath))
+         yeniSifreInput.send_keys(yeniSifreBelirleme)
+         yeniSifreTekrarInput = self.waitForElelemetVisible((By.XPATH,sifreTekrarXpath))
+         yeniSifreTekrarInput.send_keys(yeniSifreBelirleme)
+         gonderButon = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss))
+         gonderButon.click()
+         sleep(7)
+         succesResetText = self.waitForElelemetVisible((By.CSS_SELECTOR,popupCss))
+         assert succesResetText.text == sifreSifirlamaBasariliText
+         sleep(3)
         # bununun yerine yeni password ile giris yapalim
 
 

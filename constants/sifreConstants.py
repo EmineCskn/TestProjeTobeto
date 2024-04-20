@@ -14,6 +14,6 @@ validemail = "eminecskn314@gmail.com"
 yeniSifreBelirleme = "123456az"
 uyumsuzSifre = "123qw"
 unregisteredMail = "qweas@gmail.com"
-popupCss = "div[role='alert'] > .toast-body"
+popupCss = ".toast-body"
 sifreSifirlamaBasariliText = "• Şifre sıfırlama işlemi başarılı."
 
