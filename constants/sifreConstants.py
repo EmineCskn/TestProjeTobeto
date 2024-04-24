@@ -17,4 +17,6 @@ unregisteredMail = "qweas@gmail.com"
 popupCss = ".toast-body"
 sifreSifirlamaBasariliText = "• Şifre sıfırlama işlemi başarılı."
 alertXpath = "//*[@class='toast-body']"
-
+yeniSifreEskisifreAyni = "• Yeni şifreniz mevcut şifrenizden farklı olmalıdır."
+fiveDigitPasswords = "12345"
+gmailUrl = "https://mail.google.com/mail/u/0/#inbox"

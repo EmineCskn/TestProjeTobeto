@@ -1,0 +1,55 @@
+baseUrl = "https://tobeto.com/giris"
+emailInputXpath = "(//*[@class='form-control mt-6'])[1]"
+passwordInputXpath = "(//*[@class='form-control mt-6'])[2]"
+validEmail = "ahmetsuattanis2@gmail.com"
+validPassword = "Ahmet9876543210"
+girisYapButtonCss = ".btn:nth-child(3)"
+menuButtonCss = ".btn.d-xxl-none.navbar-burger.p-0 > svg"
+profilimButtonCss = ".nav-link:nth-child(3)"
+profilDuzenleCss = ".cv-edit-icon"
+medyaHesaplarimButtonCss = ".btn:nth-child(6) > .sidebar-text"
+socialMediaButtonName = "socialMedia"
+dropdownButtonName =  "socialMedia"
+dropdownLinkedinXpath = "//option[. = 'LinkedIn']"
+linkedinText = "LinkedIn"
+dropdownGithubXpath = "//option[. = 'Github']"
+githubText = "Github"
+dropdownTwitterXpath = "//option[. = 'Twitter']" 
+twitterText = "Twitter"
+socialMediaUrlName =  "socialMediaUrl"
+linkedinUrlLink = "https://www.linkedin.com/in/ahmetsuattanis"
+kaydetButtonCss = ".btn-primary"
+linkedinAccauntXpath = "//*[@id='__next']/div/main/section/div/div/div[2]/div[1]/label"
+githubAccauntXpath = "//*[@id='__next']/div/main/section/div/div/div[2]/div[2]/label"
+twitterAccauntXpath = "//*[@id='__next']/div/main/section/div/div/div[2]/div[3]/label"
+maxAccountMessageXpath = "//*[@id='__next']/div/main/section/div/div/div[2]/span"
+maxAccountMessageText = "En fazla 3 adet medya seçimi yapılabilir."
+popupMessage = ".toast-body"
+succesAccountAddedMessageText = "• Sosyal medya adresiniz başarıyla eklendi."
+succesAccountDeleteMessageText = "• Sosyal medya adresiniz başarıyla kaldırıldı."
+gitHubUrlLink = "https://github.com/AhmetSuatTanis"
+twitterUrlLink = "https://twitter.com/youngold101"
+
+blankBoxClasName = "text-danger"
+blankBoxText = "Doldurulması zorunlu alan*"
+
+deleteBtnXpath = "//*[@id='__next']/div/main/section/div/div/div[2]/div[2]/div/btn[1]"
+allertMessage1Xpath = "//*[@class='alert-message mx-3']"
+allertMessage1Text = "Seçilen sosyal medya hesabını silmek istediğinize emin misiniz?"
+
+allertMessage2Xpath = "//*[@class='alert-message-light mx-3']"
+allertMessage2Text = "Bu işlem geri alınamaz."
+
+popupCloseButtonXpath = "//*[@id='exw-launcher-frame-body']/div/div/div/div[1]/div[2]/button/svg"
+
+allertBtnEvet = ".btn.btn-yes.my-3"
+allertBtnHayirCss = ".btn.btn-no.my-3"
+
+duzenleBtnCss = ".fa.fa-pencil-square"
+
+guncellemeBaslikXpath = "//body/div[@role='dialog']/div//h4[.='Medya Hesabı Güncelleme']"
+guncelleButtonXpath = "/html/body/div[3]/div/div/div[2]/button[1]"
+kapatButtonXpath = "/html/body/div[3]/div/div/div[2]/button[2]"
+
+
+
