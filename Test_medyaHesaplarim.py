@@ -66,6 +66,34 @@ class Test_MedyaHesaplarim():
     maxAccountMessage = self.waitForElelemetVisible((By.XPATH,maxAccountMessageXpath))
     assert maxAccountMessage.text == maxAccountMessageText
 
+  def test_updateMediaAccount(self):
+    Test_MedyaHesaplarim.test_mediaAccount(self)
+
+
+    editButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,editBtnCss))
+    editButton.click()
+    sleep(2)
+
+    deactiveUpdateButton = self.waitForElelemetVisible((By.XPATH, updateButtonXpath))
+    assert  deactiveUpdateButton.is_displayed()
+    
+    updateHeader = self.waitForElelemetVisible((By.CSS_SELECTOR,updateHeaderCss))
+    assert updateHeader.text == updateHeaderText
+
+    newdropdown = self.driver.find_element(By.XPATH,newDropDownButtonXpath)
+    githubButton= newdropdown.find_element(By.XPATH, newDropDownGithubXpath)
+    githubButton.click()
+    socialMedyaUrlInput = self.waitForElelemetVisible((By.XPATH, newSocialMediaUrlXpat))
+    socialMedyaUrlInput.clear()
+    socialMedyaUrlInput.send_keys(gitHubUrlLink)
+    updateButton = self.waitForElelemetVisible((By.XPATH, updateButtonActiveXpath))
+    updateButton.click()
+
+
+    succesUpdateAccount = self.waitForElelemetVisible((By.CSS_SELECTOR,popupMessage))
+    assert succesUpdateAccount.text == succesUpdateAccauntPopupText
+    sleep(5)
+
   def test_blankChooseBox(self):
     emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
     emailInput.send_keys(validEmail)
@@ -199,35 +227,7 @@ class Test_MedyaHesaplarim():
     succesAccountDelete = self.waitForElelemetVisible((By.CSS_SELECTOR,popupMessage))
     assert succesAccountDelete.text == succesAccountDeleteMessageText
   
-  def test_updateMediaAccount(self):
-    Test_MedyaHesaplarim.test_mediaAccount(self)
-
-
-    editButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,editBtnCss))
-    editButton.click()
-    sleep(2)
-
-    deactiveUpdateButton = self.waitForElelemetVisible((By.XPATH, updateButtonXpath))
-    assert  deactiveUpdateButton.is_displayed()
-    
-    updateHeader = self.waitForElelemetVisible((By.CSS_SELECTOR,updateHeaderCss))
-    assert updateHeader.text == updateHeaderText
-
-    # newSocialMediaButton = self.waitForElelemetVisible((By.XPATH,newSocialMediaButtonXpath))
-    # newSocialMediaButton.click()
-    newdropdown = self.driver.find_element(By.XPATH,newDropDownButtonXpath)
-    githubButton= newdropdown.find_element(By.XPATH, newDropDownGithubXpath)
-    githubButton.click()
-    socialMedyaUrlInput = self.waitForElelemetVisible((By.XPATH, newSocialMediaUrlXpat))
-    socialMedyaUrlInput.clear()
-    socialMedyaUrlInput.send_keys(gitHubUrlLink)
-    updateButton = self.waitForElelemetVisible((By.XPATH, updateButtonActiveXpath))
-    updateButton.click()
-
-
-    succesUpdateAccount = self.waitForElelemetVisible((By.CSS_SELECTOR,popupMessage))
-    assert succesUpdateAccount.text == succesUpdateAccauntPopupText
-    sleep(5)
+  
 
 
 
