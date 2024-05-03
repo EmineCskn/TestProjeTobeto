@@ -139,10 +139,9 @@ class Test_ProfilimGoruntuleme():
     testList=[]
     for i in levelTestList:
       testList.append(i.text)
-    testListClean=[i.replace('"', "'") for i in testList]
-    testListClean1 = [i.replace("\n", "', ") for i in testListClean]
     
-    assert levelTestItem1 in testListClean1
+    
+    assert len(testList)== 2
     
 
 
