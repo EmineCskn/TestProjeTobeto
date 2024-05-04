@@ -6,10 +6,9 @@ from selenium.webdriver.support.wait import WebDriverWait #ilgili driverı bekle
 from selenium.webdriver.support import expected_conditions as ec #beklenen koşullar
 from selenium.common.exceptions import TimeoutException
 import pytest
-from constants.sifreConstants import *
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
-from constants.profilimConstants import *
+from constants.profileConstants import *
 from selenium.webdriver.common.action_chains import ActionChains
 
 class Test_ProfilimGoruntuleme():
@@ -140,8 +139,12 @@ class Test_ProfilimGoruntuleme():
     for i in levelTestList:
       testList.append(i.text)
     
-    
+    testListClean1 = [i.replace("\n", ", ") for i in testList]
+
+    assert levelTestItem1 in testListClean1
     assert len(testList)== 2
+
+    
     
 
 

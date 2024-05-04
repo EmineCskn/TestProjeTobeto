@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait #ilgili driverı bekle
 from selenium.webdriver.support import expected_conditions as ec #beklenen koşullar
 from selenium.common.exceptions import TimeoutException
 import pytest
-from constants.sifreConstants import *
+from constants.passwordConstants import *
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
 
@@ -45,7 +45,7 @@ class Test_Sifre():
          sifremiUnuttumButton.click()
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
-         sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
+         self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
          self.driver=webdriver.Chrome()
          self.driver.maximize_window()
          self.driver.get(gmailUrl)
@@ -53,21 +53,22 @@ class Test_Sifre():
          sleep(3)
          email_giris.send_keys(validemail)
          email_giris.click()
-         sonraki= self.waitForElelemetVisible((By.XPATH, "//div[@id='identifierNext']/div/button/span"))
-         sonraki.click()
+         self.waitForElelemetVisible((By.XPATH, afterXpath)).click()
+         
 
          password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
          password.send_keys(validPassword)
-         simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
-         simdi_giris_yap.click()
+         self.waitForElelemetVisible((By.CSS_SELECTOR, nowLoginCss)).click()
+        
          window_before = self.driver.window_handles[0]
-         sleep(1)
-         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
-         first_message.click()  # İlk mesaja tıkla
+         sleep(7)
+         # İlk mesaja tıkla
+         self.waitForElelemetVisible((By.XPATH, inboxFirstXpath)).click()
+          
 
          self.driver.execute_script("window.scrollTo(0,200)")
          sleep(2)
-         first_messageLink = self.waitForElelemetVisible((By.XPATH, "//*[@rel='noopener']"))
+         first_messageLink = self.waitForElelemetVisible((By.XPATH, firstMessageXpath))
          first_messageLink.click()
          sleep(5)
 
@@ -255,16 +256,3 @@ class Test_Sifre():
 
         
          succesResetText = self.waitForElelemetInvisible((By.XPATH,alertXpath))
-         
-
-      
-        
-      
-      
-
-         
-
-      
-
-
-  

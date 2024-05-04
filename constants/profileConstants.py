@@ -49,6 +49,6 @@ professionalAttitudeXpath = "(//*[@class='legendName'])[2]"
 seeIconAnalysisReportXpath = "(//*[@class='cv-see-icon'])[2]"
 analysisReportTextClassName = "h6.text-center"
 levelTestsXpath = "//*[@class=' envantory-result']"
-levelTestItem1 = "Herkes İçin Kodlama 4A Değerlendirme Sınavı"
+levelTestItem1 = "Herkes İçin Kodlama 4A Değerlendirme Sınavı, 25-12-2023, 76.00"
 profileButton2Css = "li:nth-of-type(2) > .c-gray-3.nav-link"
 
