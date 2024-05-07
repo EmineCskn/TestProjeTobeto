@@ -53,5 +53,11 @@ levelTestItem1 = "Herkes İçin Kodlama 4A Değerlendirme Sınavı, 25-12-2023, 
 profileButton2Css = "li:nth-of-type(2) > .c-gray-3.nav-link"
 
 profileShare = "//*[@id='dropdown-basic']"
-
+badgesimgClassName = "img-fluid"
+tagnameImg = "img"
+oldAktivity = "06/11/2023 :  1 adet aktivite"
+weeksClassName = "react-calendar-heatmap-week"
+allWeeksTagname = "rect"
+colorPaleteClassName = "hm-colors"
+colorSamplesClassName = "span"
 

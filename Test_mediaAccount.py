@@ -6,8 +6,6 @@ from selenium.webdriver.support.wait import WebDriverWait #ilgili driverı bekle
 from selenium.webdriver.support import expected_conditions as ec #beklenen koşullar
 from selenium.common.exceptions import TimeoutException
 import pytest
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.alert import Alert
 from constants.mediaAccountConstants import *
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -54,9 +52,7 @@ class Test_MedyaHesaplarim():
     deleteButton.click()
 
     evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
-    evetButton.click() 
-
-      
+    evetButton.click()  
 
   def test_mediaAddedAccount(self):
     self.preCondition()

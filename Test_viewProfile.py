@@ -36,7 +36,7 @@ class Test_ProfilimGoruntuleme():
          list.append(i.text)
         return list
 
-  def test_login(self):
+  def preCondition(self):
       emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
       emailInput.send_keys(validEmail)
       passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
@@ -50,7 +50,7 @@ class Test_ProfilimGoruntuleme():
 
   
   def test_profilimgoruntulemetesti(self):
-    self.test_login()
+    self.preCondition()
     lastnamefirstname = self.waitForElelemetVisible((By.XPATH,lastnamefirstnameXpath))
     textName = self.driver.execute_script("return arguments[0].textContent", lastnamefirstname)
     assert textName == lastnamefirstnameText , "Metin beklenen değere eşit değil"
@@ -131,43 +131,38 @@ class Test_ProfilimGoruntuleme():
     testListClean1 = [i.replace("\n", ", ") for i in levelTestList]
     assert levelTestItem1 in testListClean1
     
-    rozetlerim = self.waitForAllElelemetVisible((By.CLASS_NAME,"img-fluid"))
+    badges = self.waitForAllElelemetVisible((By.CLASS_NAME,badgesimgClassName))
     
-    for i in rozetlerim:
-      assert i.tag_name == "img",  "Belirtilen öğe bir resim değil"
+    for i in badges:
+      assert i.tag_name == tagnameImg,  "Belirtilen öğe bir resim değil"
       assert i.is_displayed()
 
 
-    weeks = self.waitForAllElelemetVisible((By.CLASS_NAME, "react-calendar-heatmap-week"))
+    weeks = self.waitForAllElelemetVisible((By.CLASS_NAME, weeksClassName))
     assert len(weeks) == 53
-    all_weeks = self.waitForAllElelemetVisible((By.TAG_NAME, "rect"))
+    all_weeks = self.waitForAllElelemetVisible((By.TAG_NAME, allWeeksTagname))
     days = []
     for i in all_weeks:
       days.append(i.get_attribute("data-tip"))
-    assert  "06/11/2023 :  1 adet aktivite" in days
-
-
-    self.waitForElelemetVisible((By.XPATH,"(//*[@class='min-data'])[1]")).get_attribute("data-tip") == "06/11/2023 :  1 adet aktivite" 
-    
-
+    assert oldAktivity in days
 
     # Renk cetvelini temsil eden elementi tanımlayın (örneğin, bir <div> elementi olabilir)
-    color_palette =self.driver.find_element(By.CLASS_NAME, "hm-colors")  # Örnek CSS sınıfı
+    colorPalette =self.driver.find_element(By.CLASS_NAME,colorPaleteClassName )  # Örnek CSS sınıfı
     
     # Renk cetvelinin içindeki renk örneklerini bulun
-    color_samples = color_palette.find_elements(By.TAG_NAME, "span")
+    colorSamples = colorPalette.find_elements(By.TAG_NAME,colorSamplesClassName)
     
     # Beklenen renk örneği sayısı
     expected_sample_count = 5  # Örnek olarak, beş renk örneği var
     
     # Her bir renk örneği için doğrulama yapın
-    for color_sample in color_samples:
+    for colorSample in colorSamples:
         # Her bir renk örneğinin belirli bir sınıfa sahip olduğunu kontrol edin
-        if not color_sample.get_attribute("class").startswith("hm"):
+        if not colorSample.get_attribute("class").startswith("hm"):
             raise NoSuchElementException("Renk örneği beklenen sınıflara sahip değil.")
     
     # Renk örneği sayısını doğrula
-    assert len(color_samples) == expected_sample_count
+    assert len(colorSamples) == expected_sample_count
     
     
     
