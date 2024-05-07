@@ -24,12 +24,10 @@ class Test_MedyaHesaplarim():
   
   def waitForElelemetVisible(self,locator,timeout=15):
         return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
-  # def waitForAllElelemetVisible(self,locators,timeout=5):
-  #       return WebDriverWait(self.driver,timeout).until(ec.visibility_of_all_elements_located(locators))
   def waitForElelemetInvisible(self,locator,timeout=10):
         return WebDriverWait(self.driver,timeout).until(ec.invisibility_of_element_located(locator))
-
-  def test_mediaAccount(self):
+  
+  def preCondition(self):
     emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
     emailInput.send_keys(validEmail)
     passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
@@ -45,6 +43,23 @@ class Test_MedyaHesaplarim():
 
     medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
     medyaHesaplarimButton.click()
+
+  def deleteBtn(self):
+    deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedLinkedinXpath))
+    actions = ActionChains(self.driver)
+    actions.move_to_element(deleteMauseHower).perform()
+    sleep(3)
+
+    deleteButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,deleteBtnCss))
+    deleteButton.click()
+
+    evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
+    evetButton.click() 
+
+      
+
+  def test_mediaAddedAccount(self):
+    self.preCondition()
 
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
     socialMediaButton.click()
@@ -68,39 +83,10 @@ class Test_MedyaHesaplarim():
     assert maxAccountMessage.text == maxAccountMessageText
     sleep(5)
 
-    deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedLinkedinXpath))
-    actions = ActionChains(self.driver)
-    actions.move_to_element(deleteMauseHower).perform()
-    sleep(3)
-
-    deleteButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,deleteBtnCss))
-    deleteButton.click()
-    
-    evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
-    evetButton.click() 
-
-  
-
-    
+    self.deleteBtn()
 
   def test_blankChooseBox(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-
-
-    medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
-    medyaHesaplarimButton.click()
-
+    self.preCondition()
     
     socialMedyaUrlInput = self.waitForElelemetVisible((By.NAME, socialMediaUrlName))
     socialMedyaUrlInput.send_keys(linkedinUrlLink)
@@ -111,22 +97,7 @@ class Test_MedyaHesaplarim():
     assert blankChooseMessage.text == blankBoxText
   
   def test_blankUrlBox(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-
-    medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
-    medyaHesaplarimButton.click()
-
+    self.preCondition()
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
     socialMediaButton.click()
     dropdown = self.driver.find_element(By.NAME,dropdownButtonName)
@@ -140,21 +111,7 @@ class Test_MedyaHesaplarim():
     assert blankUrlMessage.text == blankBoxText
 
   def test_deleteMediaAccount(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-
-    medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
-    medyaHesaplarimButton.click()
+    self.preCondition()
 
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
     socialMediaButton.click()
@@ -203,21 +160,7 @@ class Test_MedyaHesaplarim():
     assert succesAccountDelete.text == succesAccountDeleteMessageText
   
   def test_threeMediaAccount(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-
-    medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
-    medyaHesaplarimButton.click()
+    self.preCondition()
 
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
     socialMediaButton.click()
@@ -243,7 +186,7 @@ class Test_MedyaHesaplarim():
 
     succesAccountAdded = self.waitForElelemetVisible((By.CSS_SELECTOR,popupMessage))
     assert succesAccountAdded.text == succesAccountAddedMessageText
-    sleep(3)
+    sleep(5)
     
 
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
@@ -271,58 +214,15 @@ class Test_MedyaHesaplarim():
     assert  self.waitForElelemetInvisible((By.NAME,socialMediaButtonName))
     assert  self.waitForElelemetInvisible((By.NAME,socialMediaUrlName))
 
-    deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedLinkedinXpath))
-    actions = ActionChains(self.driver)
-    actions.move_to_element(deleteMauseHower).perform()
-    sleep(3)
-
-    deleteButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,deleteBtnCss))
-    deleteButton.click()
-    
-    evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
-    evetButton.click()
+    self.deleteBtn()
     
     sleep(2)
-    deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedLinkedinXpath))
-    actions = ActionChains(self.driver)
-    actions.move_to_element(deleteMauseHower).perform()
-    sleep(3)
-
-    deleteButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,deleteBtnCss))
-    deleteButton.click()
-    
-    evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
-    evetButton.click()
-    
+    self.deleteBtn()
     sleep(2)
-    deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedLinkedinXpath))
-    actions = ActionChains(self.driver)
-    actions.move_to_element(deleteMauseHower).perform()
-    sleep(3)
-
-    deleteButton = self.waitForElelemetVisible((By.CSS_SELECTOR ,deleteBtnCss))
-    deleteButton.click()
+    self.deleteBtn()
     
-    evetButton = self.waitForElelemetVisible((By.CSS_SELECTOR,allertBtnEvet))
-    evetButton.click() 
-    
-
   def test_updateMediaAccount(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-
-    medyaHesaplarimButton = self.waitForElelemetVisible((By.CSS_SELECTOR, medyaHesaplarimButtonCss))
-    medyaHesaplarimButton.click()
+    self.preCondition()
 
     socialMediaButton = self.waitForElelemetVisible((By.NAME,socialMediaButtonName))
     socialMediaButton.click()
@@ -356,10 +256,6 @@ class Test_MedyaHesaplarim():
     updateButton = self.waitForElelemetVisible((By.XPATH, updateButtonActiveXpath))
     updateButton.click()
 
-    #  with verify():
-    #     check(1 == 1)
-    #     check(2 > 1, 'Message if test failed')
-    #     check('one' != 'two', 'Some message')
     succesUpdateAccount = self.waitForElelemetVisible((By.CSS_SELECTOR,popupMessage))
     try:
         assert succesUpdateAccount.text == succesUpdateAccauntPopupText

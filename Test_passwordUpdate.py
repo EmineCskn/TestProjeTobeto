@@ -9,6 +9,7 @@ import pytest
 from constants.passwordConstants import *
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.common.action_chains import ActionChains
 
 class Test_Sifre():
       def setup_method(self):
@@ -19,19 +20,53 @@ class Test_Sifre():
       def teardown_method(self):
         self.driver.quit()
       
-
       def waitForElelemetVisible(self,locator,timeout=10):
         return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
-      # def waitForAllElelemetVisible(self,locators,timeout=5):
-      #   return WebDriverWait(self.driver,timeout).until(ec.visibility_of_all_elements_located(locators))
+     
       def waitForElelemetInvisible(self,locator,timeout=5):
         return WebDriverWait(self.driver,timeout).until(ec.invisibility_of_element_located(locator))
+      
+      def login(self):
+         emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
+         emailInput.send_keys(validemail)
+         passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
+         passwordInput.send_keys(randomPassword)
+         girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
+         girisButton.click()
 
-      def test_invalidMail(self):
+      def preCondition(self):
          self.driver.execute_script("window.scrollTo(0,300)")
          sleep(2)
          sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
          sifremiUnuttumButton.click()
+
+      def gmailLogin(self):
+         self.driver=webdriver.Chrome()
+         self.driver.maximize_window()
+         self.driver.get(gmailUrl)
+         email_giris=self.waitForElelemetVisible((By.ID, emailBoxId))
+         sleep(3)
+         email_giris.send_keys(validemail)
+         email_giris.click()
+         self.waitForElelemetVisible((By.XPATH, afterXpath)).click()
+         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
+         password.send_keys(validPassword)
+         self.waitForElelemetVisible((By.CSS_SELECTOR, nowLoginCss)).click()
+
+         window_before = self.driver.window_handles[0]
+         sleep(1)
+         first_message = self.waitForElelemetVisible((By.XPATH, inboxFirstMessageXpath))
+         first_message.click()  
+
+         self.driver.execute_script("window.scrollTo(0,200)")
+         sleep(2)
+         first_messageLink = self.waitForElelemetVisible((By.XPATH, firstMessageLinkXpath))
+         first_messageLink.click()
+         sleep(5)
+
+
+      def test_invalidMail(self):
+         self.preCondition()
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(gecersizformatmail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
@@ -39,108 +74,54 @@ class Test_Sifre():
          assert gecersizformatMailText.text == gecersizformattext
       
       def test_succesPasswordReset(self):
-         self.driver.execute_script("window.scrollTo(0,300)")
-         sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
+         self.preCondition()
+
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
          self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         self.driver=webdriver.Chrome()
-         self.driver.maximize_window()
-         self.driver.get(gmailUrl)
-         email_giris=self.waitForElelemetVisible((By.ID, "identifierId"))
-         sleep(3)
-         email_giris.send_keys(validemail)
-         email_giris.click()
-         self.waitForElelemetVisible((By.XPATH, afterXpath)).click()
-         
-
-         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
-         password.send_keys(validPassword)
-         self.waitForElelemetVisible((By.CSS_SELECTOR, nowLoginCss)).click()
         
-         window_before = self.driver.window_handles[0]
-         sleep(7)
-         # İlk mesaja tıkla
-         self.waitForElelemetVisible((By.XPATH, inboxFirstXpath)).click()
-          
-
-         self.driver.execute_script("window.scrollTo(0,200)")
-         sleep(2)
-         first_messageLink = self.waitForElelemetVisible((By.XPATH, firstMessageXpath))
-         first_messageLink.click()
-         sleep(5)
-
+         self.gmailLogin()
          window_after = self.driver.window_handles[1]
          self.driver.switch_to.window(window_after)
          yeniSifreInput = self.waitForElelemetVisible((By.XPATH,yeniSifreXpath))
-         yeniSifreInput.send_keys(yeniSifreBelirleme)
+         yeniSifreInput.send_keys(randomPassword)
          yeniSifreTekrarInput = self.waitForElelemetVisible((By.XPATH,sifreTekrarXpath))
-         yeniSifreTekrarInput.send_keys(yeniSifreBelirleme)
+         yeniSifreTekrarInput.send_keys(randomPassword)
          gonderButon = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss))
          gonderButon.click()
          
         
          succesResetText = self.waitForElelemetVisible((By.XPATH,alertXpath))
          assert succesResetText.text == sifreSifirlamaBasariliText
-         sleep(3)
-        # bununun yerine yeni password ile giris yapalim
+         sleep(5)
+         self.login()
       
-      
-
       
       def test_unregisteredMail(self):
          self.driver.execute_script("window.scrollTo(0,300)")
          sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
+         self.preCondition()
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(unregisteredMail)
-         sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
+         self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
          unregisteredText = self.waitForElelemetVisible((By.XPATH,alertXpath))
          assert unregisteredText.text == gecersizformattext
        
       def test_notMatchPassword(self):
          self.driver.execute_script("window.scrollTo(0,300)")
          sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
+
+         self.preCondition()
+
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         self.driver=webdriver.Chrome()
-         self.driver.maximize_window()
-         self.driver.get("https://mail.google.com/mail/u/0/#inbox")
-         email_giris=self.waitForElelemetVisible((By.ID, "identifierId"))
-         sleep(3)
-         email_giris.send_keys(validemail)
-         email_giris.click()
-         sonraki= self.waitForElelemetVisible((By.XPATH, "//div[@id='identifierNext']/div/button/span"))
-         sonraki.click()
 
-         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
-         password.send_keys(validPassword)
-         simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
-         simdi_giris_yap.click()
-
-
-        
-         window_before = self.driver.window_handles[0]
-         sleep(1)
-         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
-         first_message.click()  
-
-         self.driver.execute_script("window.scrollTo(0,200)")
-         sleep(2)
-         first_messageLink = self.waitForElelemetVisible((By.XPATH, "//*[@rel='noopener']"))
-         first_messageLink.click()
-         sleep(5)
-
+         self.gmailLogin()
          window_after = self.driver.window_handles[1]
          self.driver.switch_to.window(window_after)
          yeniSifreInput = self.waitForElelemetVisible((By.XPATH,yeniSifreXpath))
-         yeniSifreInput.send_keys(yeniSifreBelirleme)
+         yeniSifreInput.send_keys(randomPassword)
          yeniSifreTekrarInput = self.waitForElelemetVisible((By.XPATH,sifreTekrarXpath))
          yeniSifreTekrarInput.send_keys(uyumsuzSifre)
          gonderButon = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss))
@@ -158,45 +139,19 @@ class Test_Sifre():
       def test_oldPasswordReset(self):
          self.driver.execute_script("window.scrollTo(0,300)")
          sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
+         self.preCondition()
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         self.driver=webdriver.Chrome()
-         self.driver.maximize_window()
-         self.driver.get("https://mail.google.com/mail/u/0/#inbox")
-         email_giris=self.waitForElelemetVisible((By.ID, "identifierId"))
-         sleep(3)
-         email_giris.send_keys(validemail)
-         email_giris.click()
-         sonraki= self.waitForElelemetVisible((By.XPATH, "//div[@id='identifierNext']/div/button/span"))
-         sonraki.click()
 
-         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
-         password.send_keys(validPassword)
-         simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
-         simdi_giris_yap.click()
-
-
-        # İlk mesajı bulmak için bekleyici oluştur
-         window_before = self.driver.window_handles[0]
-         sleep(1)
-         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
-         first_message.click()  # İlk mesaja tıkla
-
-         self.driver.execute_script("window.scrollTo(0,200)")
-         sleep(2)
-         first_messageLink = self.waitForElelemetVisible((By.XPATH, "//*[@rel='noopener']"))
-         first_messageLink.click()
-         sleep(5)
+         self.gmailLogin()
 
          window_after = self.driver.window_handles[1]
          self.driver.switch_to.window(window_after)
          yeniSifreInput = self.waitForElelemetVisible((By.XPATH,yeniSifreXpath))
-         yeniSifreInput.send_keys(yeniSifreBelirleme)
+         yeniSifreInput.send_keys(firstOldPassword)
          yeniSifreTekrarInput = self.waitForElelemetVisible((By.XPATH,sifreTekrarXpath))
-         yeniSifreTekrarInput.send_keys(yeniSifreBelirleme)
+         yeniSifreTekrarInput.send_keys(firstOldPassword)
          gonderButon = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss))
          gonderButon.click()
 
@@ -212,38 +167,13 @@ class Test_Sifre():
       def test_minSixDigitPassword(self):
          self.driver.execute_script("window.scrollTo(0,300)")
          sleep(2)
-         sifremiUnuttumButton = self.waitForElelemetVisible((By.CSS_SELECTOR,sifremiUnuttumCss))
-         sifremiUnuttumButton.click()
+         self.preCondition()
+
          epostaInput = self.waitForElelemetVisible((By.XPATH,ePostaXPath))
          epostaInput.send_keys(validemail)
          sendButton = self.waitForElelemetVisible((By.CSS_SELECTOR,gonderCss)).click()
-         self.driver=webdriver.Chrome()
-         self.driver.maximize_window()
-         self.driver.get("https://mail.google.com/mail/u/0/#inbox")
-         email_giris=self.waitForElelemetVisible((By.ID, "identifierId"))
-         sleep(3)
-         email_giris.send_keys(validemail)
-         email_giris.click()
-         sonraki= self.waitForElelemetVisible((By.XPATH, "//div[@id='identifierNext']/div/button/span"))
-         sonraki.click()
 
-         password=self.waitForElelemetVisible((By.CSS_SELECTOR,passwordCSS))
-         password.send_keys(validPassword)
-         simdi_giris_yap=self.waitForElelemetVisible((By.CSS_SELECTOR, ".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d"))
-         simdi_giris_yap.click()
-
-
-        # İlk mesajı bulmak için bekleyici oluştur
-         window_before = self.driver.window_handles[0]
-         sleep(1)
-         first_message = self.waitForElelemetVisible((By.XPATH, "(//*[@jscontroller='ZdOxDb'])[1]"))
-         first_message.click()  # İlk mesaja tıkla
-
-         self.driver.execute_script("window.scrollTo(0,200)")
-         sleep(2)
-         first_messageLink = self.waitForElelemetVisible((By.XPATH, "//*[@rel='noopener']"))
-         first_messageLink.click()
-         sleep(5)
+         self.gmailLogin()
 
          window_after = self.driver.window_handles[1]
          self.driver.switch_to.window(window_after)
@@ -256,3 +186,4 @@ class Test_Sifre():
 
         
          succesResetText = self.waitForElelemetInvisible((By.XPATH,alertXpath))
+         

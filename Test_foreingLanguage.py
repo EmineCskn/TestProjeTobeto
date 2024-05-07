@@ -27,8 +27,8 @@ class Test_Yabancidillerim():
 
   def waitForElelemetInvisible(self,locator,timeout=5):
         return WebDriverWait(self.driver,timeout).until(ec.invisibility_of_element_located(locator))
-
-  def test_foreingLanguagesAdded(self):
+  
+  def loginForeingLanguage(self):
     emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
     emailInput.send_keys(validEmail)
     passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
@@ -43,6 +43,9 @@ class Test_Yabancidillerim():
     profilDuzenleButton.click()
     foreingLanguangeButton = self.waitForElelemetVisible((By.CSS_SELECTOR, yabanciDillerimButtonCss))
     foreingLanguangeButton.click()
+
+  def test_foreingLanguagesAdded(self):
+    self.loginForeingLanguage()
 
     languageButton = self.waitForElelemetVisible((By.NAME,languageButtonName))
     languageButton.click()
@@ -64,19 +67,7 @@ class Test_Yabancidillerim():
     sleep(5)
 
   def test_blankLanguageChooseBox(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-    foreingLanguangeButton = self.waitForElelemetVisible((By.CSS_SELECTOR, yabanciDillerimButtonCss))
-    foreingLanguangeButton.click()
+    self.loginForeingLanguage()
 
 
     proficiencyButton = self.waitForElelemetVisible((By.NAME,proficiencyButtonName))
@@ -92,19 +83,7 @@ class Test_Yabancidillerim():
     sleep(5)
 
   def test_blankProficiencyBox(self):
-    emailInput = self.waitForElelemetVisible((By.XPATH,emailInputXpath)) 
-    emailInput.send_keys(validEmail)
-    passwordInput =self.waitForElelemetVisible((By.XPATH,passwordInputXpath))
-    passwordInput.send_keys(validPassword)
-    girisButton = self.waitForElelemetVisible((By.CSS_SELECTOR,girisYapButtonCss))
-    girisButton.click()
-    sleep(7)
-    profilimButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilimButtonCss))
-    profilimButton.click()
-    profilDuzenleButton = self.waitForElelemetVisible((By.CSS_SELECTOR,profilDuzenleCss))
-    profilDuzenleButton.click()
-    foreingLanguangeButton = self.waitForElelemetVisible((By.CSS_SELECTOR, yabanciDillerimButtonCss))
-    foreingLanguangeButton.click()
+    self.loginForeingLanguage()
 
     languageButton = self.waitForElelemetVisible((By.NAME,languageButtonName))
     languageButton.click()
@@ -121,7 +100,7 @@ class Test_Yabancidillerim():
     sleep(5)
 
   def test_deleteForeingLanguages(self):
-    Test_Yabancidillerim.test_foreingLanguagesAdded(self)
+    self.test_foreingLanguagesAdded()
     deleteMauseHower = self.waitForElelemetVisible((By.XPATH,succesAddedEnglishXpath))
     actions = ActionChains(self.driver)
     actions.move_to_element(deleteMauseHower).perform()
